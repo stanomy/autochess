@@ -1,0 +1,72 @@
+name: auto-chess
+server:
+    port: 10002
+
+#log
+#logging:
+#  config: mizout-db:logback.xml
+#logging.file: /home/develop/app.log
+#logging.level.com.mizout.store.controller: debug
+
+
+#是否启动初始化方法
+#runner:
+#  isRun: true
+
+#springbootadmin模块配置
+spring.boot.admin.url: http://localhost:11111
+management.security.enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+#SpringBootActuator监控暴露所有接口
+
+#info.groupId: @project.groupId@
+#info.artifactId: @project.artifactId@
+#info.version: @project.version@
+
+
+#springbootadmin模块配置_end
+
+
+#mybatis:
+#  type-handlers-package: com.mizout.common.handlers
+#---
+#spring:
+#  profiles:
+#    active: dev
+#
+#---
+##测试环境
+#spring:
+#  profiles: test
+##  master 数据源配置
+#  datasource:
+#    master:
+#      driverClassName: org.postgresql.Driver
+#      url: jdbc:postgresql://192.168.31.246:5432/mizout
+#      username: mizout
+#      password: mizout
+#  application:
+#    name: 测试环境
+#
+#---
+##开发环境
+#spring:
+#  profiles: dev
+##  master 数据源配置
+#  datasource:
+#    master:
+#      driverClassName: org.postgresql.Driver
+#      url: jdbc:postgresql://localhost:5432/mizouttest
+#      username: postgres
+#      password: 111111
+#  application:
+#    name: 开发环境
+#
+#---
