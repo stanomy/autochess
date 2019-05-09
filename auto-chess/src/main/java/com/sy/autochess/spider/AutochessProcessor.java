@@ -24,24 +24,26 @@ public class AutochessProcessor implements PageProcessor {
         List<String> requests = page.getHtml().links().regex("https://autochess\\.op\\.gg/user/[^-]+-\\d+").all();
         page.addTargetRequests(requests);
         page.putField("title", page.getHtml().xpath("//h1[@style='margin-top: 10px;']/text()"));
-        if(page.getResultItems().get("title")==null){
+        if (page.getResultItems().get("title") == null) {
             page.setSkip(true);
         }
         /**
          *  -entry--win match-entry--top match-entry--
          */
-        List<Selectable> list=page.getHtml().xpath("//div[@class=\"match-entry--\"]").nodes();
+        List<Selectable> list = page.getHtml().xpath("//div[@class=\"match-entry--\"]").nodes();
 
-        for(Selectable s:list){
+        for (Selectable s : list) {
 
-            String time=s.xpath("//div[@class='date text-muted']/@title").get();
-            System.out.println("游戏时间="+time);
-            List<Selectable> heros=s.xpath("//div[@class=\"match-hero\"]").nodes();
-            for(Selectable a:heros){
-                String heroName=a.xpath("/div/@title").get();
-                int heroRank=a.xpath("//i[@class='fa fa-star']").nodes().size();
+            String id=s.xpath("/div/@id").get().replaceAll("entry-","");
+            String rank = s.xpath("//div[@class='rank']/span[@class='font-weight-bold']/text()").get();
+            String time = s.xpath("//div[@class='date text-muted']/@data-date").get();
+            System.out.println("当局等级=" + rank + ",游戏时间=" + time);
+            List<Selectable> heros = s.xpath("//div[@class=\"match-hero\"]").nodes();
+            for (Selectable a : heros) {
+                String heroName = a.xpath("//img/@title").get();
+                int heroRank = a.xpath("//i[@class='fa fa-star']").nodes().size();
 
-                System.out.println("英雄名="+heroName+",等级="+heroRank);
+                System.out.println("英雄名=" + heroName + ",等级=" + heroRank);
             }
 //            System.out.println(s.toString());
         }
@@ -55,6 +57,15 @@ public class AutochessProcessor implements PageProcessor {
 
     public static void main(String[] args) {
         Spider.create(new AutochessProcessor()).addUrl("https://autochess.op.gg/user/525387699-545948").pipeline(new ConsolePipeline()).run();
+
+    }
+
+    /**
+     * 解析单局信息
+     *
+     * @param page
+     */
+    public void processSet(Page page) {
 
     }
 }
