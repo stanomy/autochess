@@ -31,7 +31,10 @@ public class AutochessUser implements PageProcessor {
         /**
          *  -entry--win match-entry--top match-entry--
          */
-        List<Selectable> list = page.getHtml().xpath("//table//tr").nodes();
+//        List<Selectable> list = page.getHtml().xpath("//table//tr").nodes();
+
+
+        List<Selectable> list = page.getHtml().xpath("//div[@class='\\\"ml-2\\\"']").nodes();
 
         for (Selectable s : list) {
 
@@ -40,11 +43,14 @@ public class AutochessUser implements PageProcessor {
             String time = s.xpath("//div[@class='\\\"date text-muted\\\"']/@data-date").get();
             System.out.println("当局等级=" + rank + ",游戏时间=" + time);
             List<Selectable> heros = s.xpath("//div[contains(@class,'match-hero')]").nodes();
+//            List<Selectable> heros = s.xpath("//img").nodes();
             for (Selectable a : heros) {
-                String heroName = a.xpath("//img/@title").get();
-                int heroRank = a.xpath("//i[contains(@class,'fa fa-star')]").nodes().size();
+                String heroName = a.xpath("/img/@title").get();
+                String aaa=a.xpath("//div[1]/i").get();
+                int heroRank = a.xpath("/div[1]/div[1]/i").nodes().size();
 
                 System.out.println("英雄名=" + heroName + ",等级=" + heroRank);
+                System.out.println("aaa==="+aaa);
             }
 //            System.out.println(s.toString());
         }
