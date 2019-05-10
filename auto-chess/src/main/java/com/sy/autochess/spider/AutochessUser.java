@@ -45,9 +45,14 @@ public class AutochessUser implements PageProcessor {
             List<Selectable> heros = s.xpath("//div[contains(@class,'match-hero')]").nodes();
 //            List<Selectable> heros = s.xpath("//img").nodes();
             for (Selectable a : heros) {
-                String heroName = a.xpath("/img/@title").get();
-                String aaa=a.xpath("//div[1]/i").get();
-                int heroRank = a.xpath("/div[1]/div[1]/i").nodes().size();
+                String heroName = a.xpath("//img/@title").get();
+                String aaa=a.regex("<i class").get();
+                List<Selectable> ranksss=a.regex("<i class").nodes();
+                for(Selectable aa:ranksss){
+                    System.out.println("ranksss="+aa.toString());
+                }
+                int heroRank = a.regex("<i class").nodes().size();
+
 
                 System.out.println("英雄名=" + heroName + ",等级=" + heroRank);
                 System.out.println("aaa==="+aaa);
